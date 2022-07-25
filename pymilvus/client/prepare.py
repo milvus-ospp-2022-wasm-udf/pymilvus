@@ -885,3 +885,16 @@ class Prepare:
             entity=milvus_types.GrantEntity(role=milvus_types.RoleEntity(name=role_name),
                                             object=milvus_types.ObjectEntity(name=object) if object else None,
                                             object_name=object_name if object_name else None))
+
+    @classmethod
+    def create_function_request(cls, function_name, wat_body, function_args):
+        # TODO (ziyu wang)
+        req = milvus_types.CreateFunctionRequest(
+            function_name=function_name,
+            wat_body=wat_body,
+        )
+
+        if function_args is not None:
+            req.channel_names.extend(function_args)
+
+        return req

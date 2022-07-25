@@ -1268,3 +1268,12 @@ class GrpcHandler:
             raise MilvusException(resp.status.error_code, resp.status.reason)
 
         return GrantInfo(resp.entities)
+
+    @retry_on_rpc_failure()
+    def create_function(self, function_name, function_body, function_args, timeout=None, **kwargs):
+        # TODO (ziyu wang)
+        request = Prepare.create_function_request(function_name, function_body, function_args)
+        rf = self._stub.CreateFunction.future(request, timeout=timeout)
+        response = rf.result()
+        if response.error_code != 0:
+            raise MilvusException(response.error_code, response.reason)
