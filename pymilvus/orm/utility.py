@@ -815,3 +815,40 @@ def list_cred_users(using="default"):
         The user names in Milvus instances.
     """
     return _get_connection(using).list_cred_users()
+
+
+def create_function(function_name: str, wasm_binary: bytes, timeout=None, using="default"):
+    """ add a wasm-based function
+
+    function_name cannot be duplicated, you can't add the same function_name to different wasm_binary.
+
+    :param function_name: The name of the function.
+    :type  function_name: str.
+
+    :param wasm_binary: The wasm binary file of the function.
+    :type  wasm_binary: bytes.
+
+    :param timeout: An optional duration of time in seconds to allow for the RPC. When timeout
+                    is set to None, client waits until server response or error occur
+    :type  timeout: float
+
+    # TODO add example
+    :example:
+    """
+    return _get_connection(using).create_function(function_name, wasm_binary, timeout=timeout)
+
+
+def drop_function(function_name: str, timeout=None, using="default"):
+    """
+    Drop a function by name
+
+    :param function_name: A string representing the function to be deleted
+    :type  function_name: str
+    :param timeout: An optional duration of time in seconds to allow for the RPC. When timeout
+                    is set to None, client waits until server response or error occur.
+    :type  timeout: float
+
+    # TODO add example
+    :example:
+    """
+    return _get_connection(using).drop_function(function_name, timeout=timeout)
