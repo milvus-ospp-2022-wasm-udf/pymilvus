@@ -838,6 +838,22 @@ def create_function(function_name: str, wasm_binary: bytes, timeout=None, using=
     return _get_connection(using).create_function(function_name, wasm_binary, timeout=timeout)
 
 
+def run_function(function_name: str, timeout=None, using="default"):
+    """
+    run a function by name
+
+    :param function_name: A string representing the function to be deleted
+    :type  function_name: str
+    :param timeout: An optional duration of time in seconds to allow for the RPC. When timeout
+                    is set to None, client waits until server response or error occur.
+    :type  timeout: float
+
+    # TODO add example
+    :example:
+    """
+    return _get_connection(using).run_function(function_name, timeout=timeout)
+
+
 def drop_function(function_name: str, timeout=None, using="default"):
     """
     Drop a function by name

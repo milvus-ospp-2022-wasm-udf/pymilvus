@@ -48,6 +48,7 @@ from .orm.utility import (
     hybridts_to_unixtime, hybridts_to_datetime,
     # bulk_load, get_bulk_load_state,
     reset_password, create_credential, update_credential, delete_credential, list_cred_users,
+    create_function, run_function, drop_function,
 )
 
 from .orm import utility
@@ -69,7 +70,10 @@ __all__ = [
     'SearchResult', 'Hits', 'Hit', 'Replica', 'Group', 'Shard', 'BulkLoadState'
     'FieldSchema', 'CollectionSchema',
     'SearchFuture', 'MutationFuture',
-    'utility', 'DefaultConfig', 'ExceptionsMessage', 'MilvusUnavaliableException'
+    'utility', 'DefaultConfig', 'ExceptionsMessage', 'MilvusUnavaliableException',
+
+    # wasm udf
+    'create_function', 'run_function', 'drop_function'
 
     # pymilvus old style APIs
     'Milvus', 'Prepare', 'Status', 'DataType',
