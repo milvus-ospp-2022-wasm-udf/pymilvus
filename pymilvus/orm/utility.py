@@ -846,7 +846,7 @@ def list_users(include_role_info: bool, using="default"):
     return _get_connection(using).select_all_user(include_role_info)
 
 
-def create_function(function_name: str, wat_body: bytes, function_args, timeout=None, using="default"):
+def create_function(function_name: str, wat_body_base64: str, arg_types, timeout=None, using="default"):
     """ add a wasm-based function
 
     function_name cannot be duplicated, you can't add the same function_name to different wasm_binary.
@@ -854,11 +854,11 @@ def create_function(function_name: str, wat_body: bytes, function_args, timeout=
     :param function_name: The name of the function.
     :type  function_name: str.
 
-    :param wat_body: The wasm binary file of the function.
-    :type  wat_body: bytes.
+    :param wat_body_base64: The wasm binary file of the function (base64 encoded).
+    :type  wat_body_base64: str.
 
-    :param function_args: The types of the function arguments.
-    :type  function_args: list.
+    :param arg_types: The types of the function arguments.
+    :type  arg_types: list.
 
     :param timeout: An optional duration of time in seconds to allow for the RPC. When timeout
                     is set to None, client waits until server response or error occur
@@ -867,7 +867,10 @@ def create_function(function_name: str, wat_body: bytes, function_args, timeout=
     # TODO add example
     :example:
     """
-    return _get_connection(using).create_function(function_name, wat_body, function_args, timeout=timeout)
+    print(function_name)
+    print(wat_body_base64)
+    print(arg_types)
+    return _get_connection(using).create_function(function_name, wat_body_base64, arg_types, timeout=timeout)
 
 
 def drop_function(function_name: str, timeout=None, using="default"):

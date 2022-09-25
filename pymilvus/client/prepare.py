@@ -887,14 +887,21 @@ class Prepare:
                                             object_name=object_name if object_name else None))
 
     @classmethod
-    def create_function_request(cls, function_name, wat_body, function_args):
+    def create_function_request(cls, function_name, wat_body_base64, arg_types):
         # TODO (ziyu wang)
         req = milvus_types.CreateFunctionRequest(
             function_name=function_name,
-            wat_body=wat_body,
+            wat_body_base64=wat_body_base64,
         )
 
-        if function_args is not None:
-            req.channel_names.extend(function_args)
+        if arg_types is not None:
+            req.arg_types.extend(arg_types)
 
+        return req
+
+    @classmethod
+    def drop_function_request(cls, function_name):
+        req = milvus_types.DropFunctionRequest(
+            function_name=function_name,
+        )
         return req
