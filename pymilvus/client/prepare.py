@@ -20,7 +20,8 @@ from ..grpc_gen import milvus_pb2 as milvus_types
 
 class Prepare:
     @classmethod
-    def create_collection_request(cls, collection_name: str, fields: Union[Dict[str, Iterable], CollectionSchema], shards_num=2, **kwargs) -> milvus_types.CreateCollectionRequest:
+    def create_collection_request(cls, collection_name: str, fields: Union[Dict[str, Iterable], CollectionSchema],
+                                  shards_num=2, **kwargs) -> milvus_types.CreateCollectionRequest:
         """
         :type fields: Union(Dict[str, Iterable], CollectionSchema)
         :param fields: (Required)
@@ -46,10 +47,12 @@ class Prepare:
                                                     consistency_level=consistency_level)
 
     @classmethod
-    def get_schema_from_collection_schema(cls, collection_name: str, fields: CollectionSchema, shards_num=2, **kwargs) -> milvus_types.CreateCollectionRequest:
+    def get_schema_from_collection_schema(cls, collection_name: str, fields: CollectionSchema, shards_num=2,
+                                          **kwargs) -> milvus_types.CreateCollectionRequest:
         coll_description = fields.description
         if not isinstance(coll_description, (str, bytes)):
-            raise ParamException(Status.UNEXPECTED_ERROR, f"description [{coll_description}] has type {type(coll_description).__name__},  but expected one of: bytes, str")
+            raise ParamException(Status.UNEXPECTED_ERROR,
+                                 f"description [{coll_description}] has type {type(coll_description).__name__},  but expected one of: bytes, str")
 
         schema = schema_types.CollectionSchema(name=collection_name,
                                                autoID=fields.auto_id,
@@ -68,7 +71,8 @@ class Prepare:
         return schema
 
     @classmethod
-    def get_schema(cls, collection_name: str, fields: Dict[str, Iterable], shards_num=2, **kwargs) -> schema_types.CollectionSchema:
+    def get_schema(cls, collection_name: str, fields: Dict[str, Iterable], shards_num=2,
+                   **kwargs) -> schema_types.CollectionSchema:
         if not isinstance(fields, dict):
             raise ParamException(Status.UNEXPECTED_ERROR, "Param fields must be a dict")
 
@@ -102,7 +106,8 @@ class Prepare:
                 if primary_field is not None:
                     raise ParamException(Status.UNEXPECTED_ERROR, "A collection should only have one primary field")
                 if DataType(data_type) not in [DataType.INT64, DataType.VARCHAR]:
-                    raise ParamException(Status.UNEXPECTED_ERROR, "int64 and varChar are the only supported types of primary key")
+                    raise ParamException(Status.UNEXPECTED_ERROR,
+                                         "int64 and varChar are the only supported types of primary key")
                 primary_field = field_name
 
             auto_id = field.get('auto_id', False)
@@ -110,9 +115,11 @@ class Prepare:
                 raise ParamException(Status.UNEXPECTED_ERROR, "auto_id must be boolean")
             if auto_id:
                 if auto_id_field is not None:
-                    raise ParamException(Status.UNEXPECTED_ERROR, "A collection should only have one field whose id is automatically generated")
+                    raise ParamException(Status.UNEXPECTED_ERROR,
+                                         "A collection should only have one field whose id is automatically generated")
                 if DataType(data_type) != DataType.INT64:
-                    raise ParamException(Status.UNEXPECTED_ERROR, "int64 is the only supported type of automatic generated id")
+                    raise ParamException(Status.UNEXPECTED_ERROR,
+                                         "int64 is the only supported type of automatic generated id")
                 auto_id_field = field_name
 
             field_schema = schema_types.FieldSchema(name=field_name,
@@ -337,7 +344,8 @@ class Prepare:
         return pl
 
     @classmethod
-    def search_request(cls, collection_name, query_entities, partition_names=None, fields=None, round_decimal=-1, **kwargs):
+    def search_request(cls, collection_name, query_entities, partition_names=None, fields=None, round_decimal=-1,
+                       **kwargs):
         schema = kwargs.get("schema", None)
         fields_schema = schema.get("fields", None)  # list
         fields_name_locs = {fields_schema[loc]["name"]: loc
@@ -870,7 +878,8 @@ class Prepare:
             entity=milvus_types.GrantEntity(role=milvus_types.RoleEntity(name=role_name),
                                             object=milvus_types.ObjectEntity(name=object),
                                             object_name=object_name,
-                                            grantor=milvus_types.GrantorEntity(privilege=milvus_types.PrivilegeEntity(name=privilege))),
+                                            grantor=milvus_types.GrantorEntity(
+                                                privilege=milvus_types.PrivilegeEntity(name=privilege))),
             type=operate_privilege_type)
         pass
 
@@ -888,7 +897,6 @@ class Prepare:
 
     @classmethod
     def create_function_request(cls, function_name, wat_body_base64, arg_types):
-        # TODO (ziyu wang)
         req = milvus_types.CreateFunctionRequest(
             function_name=function_name,
             wat_body_base64=wat_body_base64,

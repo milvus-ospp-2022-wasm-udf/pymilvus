@@ -867,9 +867,6 @@ def create_function(function_name: str, wat_body_base64: str, arg_types, timeout
     # TODO add example
     :example:
     """
-    print(function_name)
-    print(wat_body_base64)
-    print(arg_types)
     return _get_connection(using).create_function(function_name, wat_body_base64, arg_types, timeout=timeout)
 
 
@@ -879,6 +876,7 @@ def drop_function(function_name: str, timeout=None, using="default"):
 
     :param function_name: A string representing the function to be deleted
     :type  function_name: str
+
     :param timeout: An optional duration of time in seconds to allow for the RPC. When timeout
                     is set to None, client waits until server response or error occur.
     :type  timeout: float
@@ -886,4 +884,5 @@ def drop_function(function_name: str, timeout=None, using="default"):
     # TODO add example
     :example:
     """
+    print(function_name)
     return _get_connection(using).drop_function(function_name, timeout=timeout)
